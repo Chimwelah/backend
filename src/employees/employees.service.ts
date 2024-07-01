@@ -48,9 +48,14 @@ export class EmployeesService {
         return this.employeesRepository.findOne({where:{id}});
     }
 
-    async update(id:number ,Employee:Partial<Employee>): Promise<Employee>{
-        await this.employeesRepository.update(id, Employee);
-        return this.employeesRepository.findOne({where:{id}})
+     async update(id:number ,employee:Partial<Employee>): Promise<Employee>{
+         await this.employeesRepository.update(id, employee);
+         return this.employeesRepository.findOne({where:{id}})
+    }
+
+    async updateEmployee(name:string ,employee): Promise<Employee>{
+        await this.employeesRepository.update(name,employee);
+        return this.employeesRepository.findOne({where:{name}})
     }
 
 }

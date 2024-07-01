@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Put } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/createEmployee.dto';
 import { Employee } from './entities/employee.entity';
 import { get } from 'http';
+import { promises } from 'dns';
 
 @Controller('employees')
 export class EmployeesController {
@@ -41,7 +42,18 @@ export class EmployeesController {
 
   @Put(':id')
   async update(@Param('id')  id:number, @Body() employee:Employee): Promise<any>{
-   return this.employeesService.update(id,employee);
+    if (!id){
+      throw new NotFoundException('employee not found')
+    }
+    else{
+      return this.employeesService.update(id,employee);  
+    }
+    
   }
 
+
+  @Patch(':id')
+  async upadte(@Param('id') id:number, @Body() employee:Employee): Promise<any>{
+    return this.employeesService.update(id,employee );
+  }
 }
